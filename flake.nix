@@ -1,5 +1,5 @@
 {
-  description = "ForgeSound: a sound design studio for short game sounds (stage 0 spike)";
+  description = "ForgeSound: a sound design studio for short game sounds";
 
   inputs = {
     # nixos-26.05 at the revision stage 0 was tested on (2026-10-28)
@@ -34,14 +34,39 @@
         '';
       });
 
-      # the main interpreter: no surgepy in it (see spike/stage0/surge_worker.py)
+      # the main interpreter: no surgepy in it (see forgesound/surge_worker.py)
       python = pkgs.python3.withPackages (ps: [
         ps.numpy
         ps.scipy
         ps.soundfile
         ps.sounddevice
+        ps.fastapi
+        ps.uvicorn
         ps.pytest
       ]);
+
+      # only the application sources, so a change in docs/ does not rebuild it
+      appSrc = pkgs.lib.fileset.toSource {
+        root = ./.;
+        fileset = ./forgesound;
+      };
+
+      # `nix run`: the local studio on http://127.0.0.1:8737/
+      forgesound = pkgs.writeShellApplication {
+        name = "forgesound";
+        runtimeInputs = [
+          python
+          pkgs.ffmpeg
+        ];
+        text = ''
+          unset LD_LIBRARY_PATH
+          export SURGEPY_SITE="${surgepy-main}/${site}"
+          export SURGE_DATA_HOME="${surgepy-main}/share/surge-xt"
+          export PYTHONPATH="${appSrc}"
+          # -P: the packaged sources, not a forgesound/ in the current directory
+          exec python -s -P -m forgesound "$@"
+        '';
+      };
 
       shellFor = sp: pkgs.mkShell {
         packages = [
@@ -80,8 +105,13 @@
     {
       packages.${system} = {
         surgepy = surgepy-main;
-        inherit surgepy-main surgepy-release;
-        default = surgepy-main;
+        inherit forgesound surgepy-main surgepy-release;
+        default = forgesound;
+      };
+
+      apps.${system}.default = {
+        type = "app";
+        program = "${forgesound}/bin/forgesound";
       };
 
       devShells.${system} = {
@@ -92,6 +122,15 @@
       checks.${system} = {
         surgepy-main = smoke "surgepy-main" surgepy-main;
         surgepy-release = smoke "surgepy-release" surgepy-release;
+        # the engine renders a default project through the Surge worker
+        engine = pkgs.runCommand "forgesound-engine-tests" { nativeBuildInputs = [ python ]; } ''
+          export HOME=$TMPDIR SURGEPY_SITE=${surgepy-main}/${site} SURGE_DATA_HOME=${surgepy-main}/share/surge-xt
+          export FORGESOUND_HOME=$TMPDIR/home PYTHONDONTWRITEBYTECODE=1
+          cp -r ${appSrc}/forgesound $TMPDIR/forgesound
+          cp -r ${./tests} $TMPDIR/tests
+          cd $TMPDIR && python -s -m pytest -q -p no:cacheprovider tests
+          touch $out
+        '';
       };
     };
 }
