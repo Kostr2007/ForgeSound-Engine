@@ -52,6 +52,12 @@
         SURGEPY_SITE = "${sp}/${site}";
         SURGE_DATA_HOME = "${sp}/share/surge-xt";
         FORGE_SURGE_VERSION = sp.version;
+        # NixOS with services.pipewire.jack.enable exports LD_LIBRARY_PATH with
+        # the host's alsa-lib / pipewire-jack, built against the host's glibc;
+        # PortAudio from the pinned nixpkgs then fails to load (GLIBC_2.43 not found)
+        shellHook = ''
+          unset LD_LIBRARY_PATH
+        '';
       };
 
       # nix flake check: the worker imports surgepy and renders a note in the

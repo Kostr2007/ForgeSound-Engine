@@ -1,0 +1,47 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1793183032,
+        "narHash": "sha256-56mFMf8heLNfYhcgbrh4GpN5x+G9JOfTFXZC3n6w0qM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "08d3a97586f6b6343b3b5e799980773629432610",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "08d3a97586f6b6343b3b5e799980773629432610",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "surge-main": "surge-main"
+      }
+    },
+    "surge-main": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792967593,
+        "narHash": "sha256-UM3ZMlhzMgYmKGg/7nr8Wd3jlF4lZ9PbRjb5+Ucoe5Y=",
+        "ref": "refs/heads/main",
+        "rev": "dab78c6170732b3883216e569a84bf084ae0ea97",
+        "shallow": true,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/surge-synthesizer/surge"
+      },
+      "original": {
+        "rev": "dab78c6170732b3883216e569a84bf084ae0ea97",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/surge-synthesizer/surge"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
