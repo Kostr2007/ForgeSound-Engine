@@ -1,0 +1,6 @@
+# nix build output links
+result
+result-*
+# stage 0 run results (attach them to the report instead)
+spike/stage0/results*/
+__pycache__/

@@ -1,0 +1,91 @@
+{
+  description = "ForgeSound: a sound design studio for short game sounds (stage 0 spike)";
+
+  inputs = {
+    # nixos-26.05 at the revision stage 0 was tested on (2026-10-28)
+    nixpkgs.url = "github:NixOS/nixpkgs/08d3a97586f6b6343b3b5e799980773629432610";
+    # Surge main at a pinned commit, with submodules: its Python bindings have
+    # the MSEG / formula / parameter-feature API that release 1.3.4 lacks
+    surge-main = {
+      url = "git+https://github.com/surge-synthesizer/surge?rev=dab78c6170732b3883216e569a84bf084ae0ea97&submodules=1";
+      flake = false;
+    };
+  };
+
+  outputs =
+    { self, nixpkgs, surge-main }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+      site = pkgs.python3.sitePackages;
+
+      # release 1.3.4: the sources and patches of nixpkgs' surge-xt
+      surgepy-release = pkgs.callPackage ./nix/surgepy.nix { };
+      surgepy-main = surgepy-release.overrideAttrs (old: {
+        version = "1.3.4-unstable-2026-10-25";
+        src = surge-main;
+        # main no longer needs the CMake-4 patch nixpkgs applies to 1.3.4
+        patches = [ ];
+        postPatch = ''
+          export XDG_DOCUMENTS_DIR=$(mktemp -d)
+          # CMake runs this script to build LuaJIT (formula modulators);
+          # its #!/bin/bash does not exist in the build sandbox
+          patchShebangs libs/luajitlib
+        '';
+      });
+
+      # the main interpreter: no surgepy in it (see spike/stage0/surge_worker.py)
+      python = pkgs.python3.withPackages (ps: [
+        ps.numpy
+        ps.scipy
+        ps.soundfile
+        ps.sounddevice
+        ps.pytest
+      ]);
+
+      shellFor = sp: pkgs.mkShell {
+        packages = [
+          python
+          pkgs.ffmpeg
+        ];
+        # only the Surge worker process gets these
+        SURGEPY_SITE = "${sp}/${site}";
+        SURGE_DATA_HOME = "${sp}/share/surge-xt";
+        FORGE_SURGE_VERSION = sp.version;
+      };
+
+      # nix flake check: the worker imports surgepy and renders a note in the
+      # build sandbox (no audio device, no network, no home directory)
+      smoke = name: sp: pkgs.runCommand "${name}-smoke" { nativeBuildInputs = [ python ]; } ''
+        export HOME=$TMPDIR PYTHONPATH=${sp}/${site} SURGE_DATA_HOME=${sp}/share/surge-xt
+        echo '{"id": 1, "op": "render", "sr": 48000, "out": "'$TMPDIR'/o.npy", "params": {"scene/0/osc/0/retrigger": 1}}' \
+          | python -s ${./spike/stage0/surge_worker.py} > $TMPDIR/reply.json
+        python -I -c "
+        import json, numpy as np
+        r = json.load(open('$TMPDIR/reply.json'))
+        assert r['ok'], r
+        x = np.load('$TMPDIR/o.npy')
+        assert np.isfinite(x).all() and abs(x).max() > 1e-3, 'silent or broken render'
+        print('${name}:', r)
+        "
+        touch $out
+      '';
+    in
+    {
+      packages.${system} = {
+        surgepy = surgepy-main;
+        inherit surgepy-main surgepy-release;
+        default = surgepy-main;
+      };
+
+      devShells.${system} = {
+        default = shellFor surgepy-main;
+        release = shellFor surgepy-release;
+      };
+
+      checks.${system} = {
+        surgepy-main = smoke "surgepy-main" surgepy-main;
+        surgepy-release = smoke "surgepy-release" surgepy-release;
+      };
+    };
+}

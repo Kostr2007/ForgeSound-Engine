@@ -1,0 +1,237 @@
+{
+ "results": [
+  {
+   "check": "S0-1",
+   "status": "PASS",
+   "msg": "main process has no surgepy; worker has it",
+   "surge": "1.3.git-no-branch.git-no-commit",
+   "worker_start_ms": 135
+  },
+  {
+   "check": "S0-2",
+   "status": "PASS",
+   "msg": "Init patch note renders",
+   "peak_db": -12.9,
+   "frames": 24000,
+   "block": 32
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc classic  : max diff, same worker / fresh worker",
+   "same": "-9.8 dB",
+   "fresh": "-9.7 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc sine     : max diff, same worker / fresh worker",
+   "same": "-4.8 dB",
+   "fresh": "-11.2 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc wavetable: max diff, same worker / fresh worker",
+   "same": "-13.9 dB",
+   "fresh": "-16.6 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc shnoise  : max diff, same worker / fresh worker",
+   "same": "-8.2 dB",
+   "fresh": "-9.5 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc FM3      : max diff, same worker / fresh worker",
+   "same": "-10.0 dB",
+   "fresh": "-6.7 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc FM2      : max diff, same worker / fresh worker",
+   "same": "-13.0 dB",
+   "fresh": "-6.6 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc window   : max diff, same worker / fresh worker",
+   "same": "-26.8 dB",
+   "fresh": "-36.4 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc modern   : max diff, same worker / fresh worker",
+   "same": "-16.6 dB",
+   "fresh": "-16.7 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc string   : max diff, same worker / fresh worker",
+   "same": "-7.5 dB",
+   "fresh": "-6.7 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc twist    : max diff, same worker / fresh worker",
+   "same": "-10.8 dB",
+   "fresh": "-10.9 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger off, osc alias    : max diff, same worker / fresh worker",
+   "same": "-13.1 dB",
+   "fresh": "-11.1 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc classic  : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc sine     : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc wavetable: max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger on , osc shnoise  : max diff, same worker / fresh worker",
+   "same": "-5.9 dB",
+   "fresh": "-7.1 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc FM3      : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc FM2      : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc window   : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc modern   : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "INFO",
+   "msg": "retrigger on , osc string   : max diff, same worker / fresh worker",
+   "same": "-7.3 dB",
+   "fresh": "-6.6 dB"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc twist    : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "retrigger on , osc alias    : max diff, same worker / fresh worker",
+   "same": "identical",
+   "fresh": "identical"
+  },
+  {
+   "check": "S0-3",
+   "status": "PASS",
+   "msg": "summary: bit-identical oscillator types",
+   "retrigger_off": [],
+   "retrigger_on": [
+    "classic",
+    "sine",
+    "wavetable",
+    "FM3",
+    "FM2",
+    "window",
+    "modern",
+    "twist",
+    "alias"
+   ]
+  },
+  {
+   "check": "S0-4",
+   "status": "PASS",
+   "msg": "0.5 s Surge render: round trip after a pause (target < 50 ms)",
+   "median_ms": 7.4,
+   "max_ms": 10.3,
+   "dsp_only_ms": 3.2,
+   "back_to_back_ms": 62.0,
+   "worker_start_ms": 135
+  },
+  {
+   "check": "S0-5",
+   "status": "PASS",
+   "msg": "sample passes through Surge (Audio Input osc)",
+   "out_peak_db": -21.7,
+   "corr_with_input": 0.195
+  },
+  {
+   "check": "S0-6",
+   "status": "PASS",
+   "msg": "dead worker detected, replaced; core alive",
+   "detected": "BrokenPipeError"
+  },
+  {
+   "check": "S0-7",
+   "status": "PASS",
+   "msg": "only the newest revision is shown",
+   "accepted": [
+    3
+   ]
+  },
+  {
+   "check": "S0-9",
+   "status": "PASS",
+   "msg": "WAV export is byte-identical across runs",
+   "sha256": "e35745f3c8734094"
+  },
+  {
+   "check": "S0-10",
+   "status": "INFO",
+   "msg": "audio outputs visible to PortAudio",
+   "n_outputs": 0,
+   "default": "[-1, -1]",
+   "first": []
+  }
+ ],
+ "python": "3.13.17 (main, Oct 21 2026, 13:48:20) [GCC 15.3.0]",
+ "environment": "cloud container, Linux x86_64, 4 cores, Nix 2.34.6 (not NixOS), nixpkgs nixos-26.05 @ 08d3a97, no sound card; 2026-10-29"
+}
