@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ForgeSound</title>
+  <link rel="icon" type="image/svg+xml" href="/ui/icon.svg">
+  <link rel="stylesheet" href="/ui/style.css">
+</head>
+<body>
+  <header class="top">
+    <img class="logo" src="/ui/icon.svg" alt="" width="34" height="34">
+    <div class="brand">
+      <div class="brand-name">ForgeSound</div>
+      <div class="brand-sub">заготовка интерфейса · v<span id="ver">…</span></div>
+    </div>
+    <input id="projName" class="proj-name" value="Новый звук" spellcheck="false" aria-label="Название звука">
+    <div class="spacer"></div>
+    <div id="status" class="status" data-state="stale" title="Состояние звука">
+      <span class="dot"></span><span id="statusText">ждёт рендера</span>
+    </div>
+    <div id="engine" class="engine">Surge: …</div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel layers-panel">
+      <div class="panel-title">Слои</div>
+      <ul id="layerList" class="layer-list"></ul>
+      <div class="add-row">
+        <button data-add="surge" class="btn">+ Surge</button>
+        <button data-add="noise" class="btn">+ Шум</button>
+        <label class="btn file-btn">+ Сэмпл<input id="fileInput" type="file" accept="audio/*,.wav,.ogg,.mp3,.flac,.lmp" hidden></label>
+      </div>
+      <div class="hint">Сэмпл можно перетащить прямо в окно. Форматы: WAV, OGG, MP3, FLAC, Doom DMX.</div>
+
+      <div class="panel-title">Проект</div>
+      <label class="field">Длительность, мс
+        <input id="durMs" type="range" min="80" max="1500" step="10"><output id="durOut"></output>
+      </label>
+      <label class="field">Мастер, дБ
+        <input id="masterDb" type="range" min="-24" max="6" step="0.5"><output id="masterOut"></output>
+      </label>
+    </aside>
+
+    <section class="center">
+      <div class="panel transport">
+        <button id="playBtn" class="btn primary" title="Пробел">▶ Слушать</button>
+        <label class="chk"><input id="loopChk" type="checkbox"> повтор</label>
+        <label class="mode">Режим
+          <select id="modeSel">
+            <option value="change">пересчёт после изменения</option>
+            <option value="live" disabled>в реальном времени (позже)</option>
+          </select>
+        </label>
+        <div class="spacer"></div>
+        <div id="metrics" class="metrics"></div>
+        <button id="exportBtn" class="btn">Экспорт WAV</button>
+      </div>
+
+      <div class="panel timeline-panel">
+        <div class="panel-title">Таймлайн <span class="muted">перетаскивайте слои по времени</span></div>
+        <canvas id="timeline" height="260"></canvas>
+      </div>
+
+      <div class="panel env-panel">
+        <div class="panel-title">Огибающая громкости: <span id="envLayerName">—</span>
+          <span class="muted">тяните точки · двойной клик — добавить · правый клик — удалить</span></div>
+        <canvas id="envelope" height="190"></canvas>
+      </div>
+    </section>
+
+    <aside class="panel params-panel">
+      <div class="panel-title">Параметры слоя</div>
+      <div id="params" class="params"></div>
+
+      <div class="panel-title soon">Вариации <span class="tag">этап 4</span></div>
+      <div class="soon-box">
+        <button class="btn" disabled>Сгенерировать 6 вариантов</button>
+        <div class="variant-grid">
+          <div class="variant"></div><div class="variant"></div><div class="variant"></div>
+          <div class="variant"></div><div class="variant"></div><div class="variant"></div>
+        </div>
+      </div>
+
+      <div class="panel-title soon">ИИ-помощник <span class="tag">этап 5</span></div>
+      <div class="soon-box">
+        <textarea disabled placeholder="«Сохрани резкую атаку, добавь веса, убери звон, сократи хвост. Три варианта.»"></textarea>
+      </div>
+
+      <div class="panel-title soon">Профиль Trailblazer <span class="tag">этап 7</span></div>
+      <div class="soon-box small">Имена TBHIT/TBK, WAV 16 бит моно 44,1 кГц, громкость как у текущих файлов, проверка на фоне выстрелов.</div>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <div id="drop" class="drop" hidden>Отпустите файл — он станет новым слоем</div>
+  <script type="module" src="/ui/app.js"></script>
+</body>
+</html>

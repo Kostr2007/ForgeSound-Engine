@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>ForgeSound</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#262a33"/>
+      <stop offset="1" stop-color="#14161b"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9d1dc"/>
+      <stop offset="0.45" stop-color="#7d8794"/>
+      <stop offset="1" stop-color="#3e444d"/>
+    </linearGradient>
+    <linearGradient id="hot" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffb347"/>
+      <stop offset="0.5" stop-color="#ff7a1a"/>
+      <stop offset="1" stop-color="#ff3d00"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="1.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="13" fill="url(#bg)"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="12.5" fill="none" stroke="#3a404b"/>
+  <!-- the sound: a sharp hit and a short ringing tail, glowing like hot metal -->
+  <path d="M10 25 H19 L22 22 L25 9 L28.5 33 L31.5 15 L34.5 28 L37 20 L39.5 25.5 L42 23 H54"
+        fill="none" stroke="url(#hot)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <!-- the anvil -->
+  <path d="M7 34 H49 Q55 34 55 38.5 V40 H41.5 L38.5 47 H45 Q47 47 47 49 V54 H17 V49 Q17 47 19 47 H25.5 L22.5 40 H15 Q9.5 40 7 34 Z"
+        fill="url(#steel)" stroke="#20242b" stroke-width="0.8"/>
+  <path d="M8.5 35 H49 Q53.6 35 54 38" fill="none" stroke="#e8edf3" stroke-width="0.9" stroke-linecap="round" opacity="0.8"/>
+  <!-- sparks -->
+  <circle cx="45" cy="13" r="1.3" fill="#ffb347"/>
+  <circle cx="50" cy="9" r="0.9" fill="#ff7a1a"/>
+  <circle cx="14" cy="15" r="0.9" fill="#ff7a1a"/>
+</svg>
